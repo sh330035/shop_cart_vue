@@ -1,9 +1,15 @@
 <template>
   <div class="container">
-    <h1>結帳</h1>
+    <h1 class="page-title">結帳</h1>
     <div class="row">
       <div class="container-left">
+        <ShoppingStep :formPartState="formPartState" />
         <!-- shoppingForm -->
+        <ShoppingForm
+          :formPartState="formPartState"
+          @after-previous-step="afterPreviousStep"
+          @after-next-step="afterNextStep"
+        />
       </div>
       <div class="container-right">
         <!-- shoppingCart -->
@@ -20,6 +26,8 @@
 
 <script>
 import ShoppingCart from "../components/ShoppingCart.vue";
+import ShoppingStep from "../components/ShoppingStep.vue";
+import ShoppingForm from "../components/ShoppingForm.vue";
 
 const dummyData = {
   items: [
@@ -70,11 +78,28 @@ export default {
   name: "shoppingPage",
   components: {
     ShoppingCart,
+    ShoppingStep,
+    ShoppingForm,
   },
   data() {
     return {
       items: [],
       deliveryMethod: [],
+      formPartState: 1,
+      userFilled: {
+        salutation: "",
+        username: "",
+        phone: "",
+        email: "",
+        city: "",
+        addr: "",
+        shippingFee: 0,
+        ccname: "",
+        cardnumber: "",
+        expdate: "",
+        cvv: 0,
+        totalPrice: 0,
+      },
     };
   },
   methods: {
@@ -107,6 +132,13 @@ export default {
         }
       });
     },
+    afterPreviousStep() {
+      this.formPartState--;
+    },
+    afterNextStep() {
+      this.formPartState++;
+    },
+    afterSubmit() {},
   },
   created() {
     this.fetchData();
@@ -114,18 +146,63 @@ export default {
 };
 </script>
 
+<style>
+button {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+button[disabled] {
+  pointer-events: none;
+}
+
+input {
+  padding: 0;
+}
+
+input:required {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input:invalid {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+form input,
+form select {
+  border: 1px solid #000000;
+  border-radius: 5px;
+  font-style: 16px;
+  padding: 0.25rem;
+  margin-top: 2px;
+  height: 30px;
+}
+</style>
+
 <style scoped>
 .container {
-  padding: 0 50px;
+  margin: 50px auto;
   width: 80%;
 }
 .container .row {
   display: flex;
+  justify-content: space-between;
 }
 .container .row .container-left {
-  width: 50%;
+  width: 45%;
 }
 .container .row .container-right {
   width: 50%;
+}
+
+.page-title {
+  width: 100%;
+  height: 78px;
+  margin: 20px 0;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 </style>
