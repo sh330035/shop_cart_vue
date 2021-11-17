@@ -6,7 +6,13 @@
       <div class="form-row card-own">
         <label for="">持卡人姓名</label>
         <br />
-        <input type="text" id="account-name" placeholder="John Doe" required />
+        <input
+          type="text"
+          v-model="partThree.ccname"
+          id="account-name"
+          placeholder="John Doe"
+          required
+        />
       </div>
       <div class="form-row card-number">
         <label for="">卡號</label>
@@ -14,6 +20,7 @@
         <div class="bank-account-input">
           <input
             type="text"
+            v-model="card[0]"
             class="card input-seperate"
             id="card"
             name="bank-account-1"
@@ -24,6 +31,7 @@
           />
           <input
             type="text"
+            v-model="card[1]"
             class="card input-seperate"
             name="bank-account-2"
             maxlength="4"
@@ -33,6 +41,7 @@
           />
           <input
             type="text"
+            v-model="card[2]"
             class="card input-seperate"
             name="bank-account-3"
             maxlength="4"
@@ -42,6 +51,7 @@
           />
           <input
             type="text"
+            v-model="card[3]"
             class="card input-seperate"
             name="bank-account-4"
             maxlength="4"
@@ -58,6 +68,7 @@
         <div class="effective-date-input">
           <input
             type="text"
+            v-model="date[0]"
             name="mouth"
             class="date input-seperate"
             placeholder="MM"
@@ -69,6 +80,7 @@
           />
           <input
             type="text"
+            v-model="date[1]"
             name="year"
             class="date input-seperate"
             placeholder="YY"
@@ -83,6 +95,7 @@
         <br />
         <input
           type="text"
+          v-model="partThree.cvv"
           maxlength="3"
           size="2"
           id="card-code"
@@ -93,6 +106,29 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "form-part-three",
+  data() {
+    return {
+      partThree: {
+        ccname: "",
+        cardnumber: "",
+        expdate: "",
+        cvv: "",
+      },
+      card: ["", "", "", ""],
+      date: ["", ""],
+    };
+  },
+  updated: function () {
+    this.partThree.cardnumber = this.card.join("");
+    this.partThree.expdate = this.date.join("/");
+    this.$emit("part-three-info", this.partThree);
+  },
+};
+</script>
 
 <style scoped>
 .part .part-title {

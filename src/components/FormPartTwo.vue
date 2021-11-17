@@ -9,7 +9,7 @@
           id="standard-method"
           name="delivery-method"
           value="standard"
-          checked
+          v-model="partTwo.deliveryMethodSelect"
         />
         <div class="delivery-description">
           <label for="standard-method">標準運送</label>
@@ -24,6 +24,7 @@
           type="radio"
           id="DHL-method"
           name="delivery-method"
+          v-model="partTwo.deliveryMethodSelect"
           value="DHL"
         />
         <div class="delivery-description">
@@ -37,6 +38,29 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "form-part-two",
+  data() {
+    return {
+      partTwo: {
+        deliveryMethodSelect: "standard",
+        shippingFee: 0,
+      },
+    };
+  },
+  updated: function () {
+    if (this.partTwo.deliveryMethodSelect == "standard") {
+      this.partTwo.shippingFee = 0;
+    } else if (this.partTwo.deliveryMethodSelect == "DHL") {
+      this.partTwo.shippingFee = 500;
+    }
+    this.$emit("part-two-info", this.partTwo);
+    return;
+  },
+};
+</script>
 
 <style scoped>
 .part .part-title {

@@ -2,9 +2,18 @@
   <div class="form-panel">
     <form action="" id="shop-form">
       <div class="form-content">
-        <FormPartOne v-if="formPartState == 1" />
-        <FormPartTwo v-if="formPartState == 2" />
-        <FormPartThree v-if="formPartState == 3" />
+        <FormPartOne
+          v-show="formPartState == 1"
+          @part-one-info="partOenInfoFetch"
+        />
+        <FormPartTwo
+          v-show="formPartState == 2"
+          @part-two-info="partTwoInfoFetch"
+        />
+        <FormPartThree
+          v-show="formPartState == 3"
+          @part-three-info="partThreeInfoFetch"
+        />
         <!-- button control -->
         <div id="btn-control" class="button-panel">
           <button
@@ -52,13 +61,54 @@ export default {
     FormPartTwo,
     FormPartThree,
   },
-  data() {},
+  data() {
+    return {
+      partOneInfo: {
+        salutation: "",
+        username: "",
+        phone: "",
+        email: "",
+        city: "",
+        addr: "",
+      },
+      partTwoInfo: {
+        deliveryMethodSelect: "standard",
+        shippingFee: 0,
+      },
+      partThreeInfo: {
+        ccname: "",
+        cardnumber: "",
+        expdate: "",
+        cvv: "",
+      },
+    };
+  },
   methods: {
     previousStep() {
       this.$emit("after-previous-step");
     },
     nextStep() {
       this.$emit("after-next-step");
+    },
+    partOenInfoFetch(info) {
+      console.log("fetch1");
+      this.partOneInfo = info;
+    },
+    partTwoInfoFetch(info) {
+      console.log("fetch2");
+      this.partTwoInfo = info;
+    },
+    partThreeInfoFetch(info) {
+      console.log("fetch3");
+      this.partThreeInfo = info;
+    },
+  },
+  watch: {
+    partTwoInfo: {
+      handler: function () {
+        this.$emit("shipping-change", this.partTwoInfo);
+      },
+      deep: true,
     },
   },
 };

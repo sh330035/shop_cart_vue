@@ -40,8 +40,8 @@ export default {
     items: {
       type: Array,
     },
-    deliveryMethod: {
-      type: Array,
+    shippingFee: {
+      type: Number,
       required: true,
     },
   },
@@ -60,15 +60,26 @@ export default {
       for (let i = 0; i < this.items.length; i++) {
         totalCostTemp += this.items[i].unitPrice * this.items[i].count;
       }
+      totalCostTemp = totalCostTemp + this.shippingFee;
       return totalCostTemp;
     },
     deliveryFee() {
+      let showed = "";
       // 確認當前運送方式，回傳顯示值
-      let deliveryFee = this.deliveryMethod.find(
-        (method) => method.thisMethod
-      ).showed;
-      return deliveryFee;
+      if (this.shippingFee == 0) {
+        showed = "免費";
+      } else {
+        showed = `$ ${this.shippingFee}`;
+      }
+      return showed;
     },
+  },
+  updated: function () {
+    // console.log(this.totalCostCal);
+    this.$emit("total-cost-change", this.totalCostCal);
+  },
+  created() {
+    this.$emit("total-cost-change", this.totalCostCal);
   },
 };
 </script>

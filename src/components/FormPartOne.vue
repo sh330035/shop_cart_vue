@@ -6,7 +6,8 @@
       <div class="form-row title">
         <label for="">稱謂</label>
         <div class="select-warpper">
-          <select name="" id="">
+          <select name="" id="" v-model="partOne.salutation">
+            <option value="" disabled selected>先生 / 女士</option>
             <option value="Mr">先生</option>
             <option value="Ms">女士</option>
           </select>
@@ -15,23 +16,41 @@
       <div class="form-row name">
         <label for="">姓名</label>
         <br />
-        <input type="text" id="name" placeholder="請輸入姓名" required />
+        <input
+          v-model="partOne.username"
+          type="text"
+          id="name"
+          placeholder="請輸入姓名"
+          required
+        />
       </div>
       <div class="form-row phone">
         <label for="">電話</label>
         <br />
-        <input type="tel" id="phone" placeholder="請輸入行動電話" required />
+        <input
+          type="tel"
+          v-model="partOne.phone"
+          id="phone"
+          placeholder="請輸入行動電話"
+          required
+        />
       </div>
       <div class="form-row email">
         <label for="">Email</label>
         <br />
-        <input type="email" id="email" placeholder="請輸入電子郵件" required />
+        <input
+          type="email"
+          v-model="partOne.email"
+          id="email"
+          placeholder="請輸入電子郵件"
+          required
+        />
       </div>
       <div class="form-row city">
         <label for="">縣市</label>
         <br />
         <div class="select-warpper">
-          <select name="" id="city">
+          <select name="" v-model="partOne.city" id="city">
             <option value="" disabled selected>請選擇縣市</option>
             <option value="new-taipei-city">新北市</option>
             <option value="taipei">台北市</option>
@@ -45,14 +64,37 @@
       <div class="form-row address">
         <label for="">地址</label>
         <br />
-        <input type="text" id="address" placeholder="請輸入地址" required />
+        <input
+          type="text"
+          v-model="partOne.addr"
+          id="address"
+          placeholder="請輸入地址"
+          required
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "form-part-one",
+  data() {
+    return {
+      partOne: {
+        salutation: "",
+        username: "",
+        phone: "",
+        email: "",
+        city: "",
+        addr: "",
+      },
+    };
+  },
+  updated: function () {
+    this.$emit("part-one-info", this.partOne);
+  },
+};
 </script>
 
 <style scoped>

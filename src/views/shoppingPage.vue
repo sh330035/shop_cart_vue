@@ -9,15 +9,17 @@
           :formPartState="formPartState"
           @after-previous-step="afterPreviousStep"
           @after-next-step="afterNextStep"
+          @shipping-change="shippingChange"
         />
       </div>
       <div class="container-right">
         <!-- shoppingCart -->
         <ShoppingCart
           :items="items"
-          :delivery-method="deliveryMethod"
+          :shippingFee="userFilled.shippingFee"
           @after-add-count="afterAddCount"
           @after-minus-count="afterMinusCount"
+          @total-cost-change="totalCost"
         />
       </div>
     </div>
@@ -137,6 +139,12 @@ export default {
     },
     afterNextStep() {
       this.formPartState++;
+    },
+    shippingChange(shipping) {
+      this.userFilled.shippingFee = shipping.shippingFee;
+    },
+    totalCost(total) {
+      this.userFilled.totalPrice = total + this.userFilled.shippingFee;
     },
     afterSubmit() {},
   },
