@@ -157,7 +157,6 @@ export default {
       for (let [name, value] of formData.entries()) {
         tempObject[name] = value;
       }
-      console.log(tempObject);
       this.userFilled = {
         ...this.userFilled,
         salutation: tempObject.salutation,

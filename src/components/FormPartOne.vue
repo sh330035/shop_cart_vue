@@ -57,10 +57,10 @@
             <option value="" disabled selected>請選擇縣市</option>
             <option value="new-taipei-city">新北市</option>
             <option value="taipei">台北市</option>
-            <option value="">桃園市</option>
-            <option value="">台中市</option>
-            <option value="">台南市</option>
-            <option value="">高雄市</option>
+            <option value="taoyuan">桃園市</option>
+            <option value="taichung">台中市</option>
+            <option value="tainan">台南市</option>
+            <option value="kaohsiung">高雄市</option>
           </select>
         </div>
       </div>
