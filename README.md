@@ -1,24 +1,23 @@
-# ac_cart_vue
+# shop_cart_vue
 
-## Project setup
-```
-npm install
-```
+## Features List ##
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* User infromation form.
+* Shop cart items calculate.
+* 
+![Alt shop_cart_vue](https://github.com/sh330035/shop_cart_vue/blob/main/public/image/shop_cart_page.png)
+![Alt shop_cart_solution](https://github.com/sh330035/shop_cart_vue/blob/main/public/image/shop_cart_solution.png)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Prerequisites ##
+* Front-End Framework Vue 2
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Installation & Execution ##
+* Enter git clone on terminal <code>$ git clone https://github.com/sh330035/shop_cart_vue</code>
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* Install the necessary npm modules on terminal <code>$ npm install</code>
+
+* Running Server (if server start to run, terminal will show: "App running at Local:http://localhost:8080/")
+  * <code>$ npm run serve</code>  
+
+* Input URL <code>http://localhost:8080</code>in browser, and enjoy the Shop Cart Project!!
+
