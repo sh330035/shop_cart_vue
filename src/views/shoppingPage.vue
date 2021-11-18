@@ -10,6 +10,7 @@
           @after-previous-step="afterPreviousStep"
           @after-next-step="afterNextStep"
           @shipping-change="shippingChange"
+          @after-submit="afterSubmit"
         />
       </div>
       <div class="container-right">
@@ -110,6 +111,14 @@ export default {
       this.items = items;
       this.deliveryMethod = deliveryMethod;
     },
+    // 表單頁面狀態切換
+    afterPreviousStep() {
+      this.formPartState--;
+    },
+    afterNextStep() {
+      this.formPartState++;
+    },
+    // 購物車數量切換
     afterAddCount(itemId) {
       this.items = this.items.map((item) => {
         if (item.id == itemId) {
@@ -134,19 +143,43 @@ export default {
         }
       });
     },
-    afterPreviousStep() {
-      this.formPartState--;
-    },
-    afterNextStep() {
-      this.formPartState++;
-    },
+    // 運費改變
     shippingChange(shipping) {
       this.userFilled.shippingFee = shipping.shippingFee;
     },
+    // 總金額改變
     totalCost(total) {
-      this.userFilled.totalPrice = total + this.userFilled.shippingFee;
+      this.userFilled.totalPrice = total;
     },
-    afterSubmit() {},
+    // 提交表單
+    afterSubmit(formData) {
+      let tempObject = {};
+      for (let [name, value] of formData.entries()) {
+        tempObject[name] = value;
+      }
+      console.log(tempObject);
+      this.userFilled = {
+        ...this.userFilled,
+        salutation: tempObject.salutation,
+        username: tempObject.name,
+        phone: tempObject.phone,
+        email: tempObject.email,
+        city: tempObject.city,
+        addr: tempObject.addr,
+        ccname: tempObject.ccname,
+        cardnumber:
+          tempObject.bank_account_1 +
+          tempObject.bank_account_2 +
+          tempObject.bank_account_3 +
+          tempObject.bank_account_4,
+        expdate: tempObject.mouth + "/" + tempObject.year,
+        cvv: tempObject.cvv,
+      };
+      // Print
+      const submitString = JSON.stringify(this.userFilled);
+      let showed = submitString.replace(/,/gi, ",\n");
+      console.log(showed);
+    },
   },
   created() {
     this.fetchData();

@@ -8,8 +8,9 @@
         <br />
         <input
           type="text"
-          v-model="partThree.ccname"
+          v-model="ccname"
           id="account-name"
+          name="ccname"
           placeholder="John Doe"
           required
         />
@@ -23,7 +24,8 @@
             v-model="card[0]"
             class="card input-seperate"
             id="card"
-            name="bank-account-1"
+            name="bank_account_1"
+            ref="bank_account_1"
             maxlength="4"
             size="4"
             placeholder="1111"
@@ -33,7 +35,8 @@
             type="text"
             v-model="card[1]"
             class="card input-seperate"
-            name="bank-account-2"
+            name="bank_account_2"
+            ref="bank_account_2"
             maxlength="4"
             size="4"
             placeholder="2222"
@@ -43,7 +46,8 @@
             type="text"
             v-model="card[2]"
             class="card input-seperate"
-            name="bank-account-3"
+            name="bank_account_3"
+            ref="bank_account_3"
             maxlength="4"
             size="4"
             placeholder="3333"
@@ -53,7 +57,8 @@
             type="text"
             v-model="card[3]"
             class="card input-seperate"
-            name="bank-account-4"
+            name="bank_account_4"
+            ref="bank_account_4"
             maxlength="4"
             size="4"
             placeholder="4444"
@@ -69,7 +74,9 @@
           <input
             type="text"
             v-model="date[0]"
+            @keyup="nextDateInput"
             name="mouth"
+            ref="mouth"
             class="date input-seperate"
             placeholder="MM"
             size="2"
@@ -81,7 +88,9 @@
           <input
             type="text"
             v-model="date[1]"
+            @keydown="previousDateInput"
             name="year"
+            ref="year"
             class="date input-seperate"
             placeholder="YY"
             size="2"
@@ -95,10 +104,11 @@
         <br />
         <input
           type="text"
-          v-model="partThree.cvv"
+          v-model="cvv"
           maxlength="3"
           size="2"
           id="card-code"
+          name="cvv"
           placeholder="111"
           required
         />
@@ -112,20 +122,25 @@ export default {
   name: "form-part-three",
   data() {
     return {
-      partThree: {
-        ccname: "",
-        cardnumber: "",
-        expdate: "",
-        cvv: "",
-      },
+      ccname: "",
+      cvv: "",
       card: ["", "", "", ""],
       date: ["", ""],
     };
   },
-  updated: function () {
-    this.partThree.cardnumber = this.card.join("");
-    this.partThree.expdate = this.date.join("/");
-    this.$emit("part-three-info", this.partThree);
+  methods: {
+    nextDateInput() {
+      if (this.date[0].length == 2) {
+        this.$refs.year.focus();
+        return;
+      }
+    },
+    previousDateInput(e) {
+      if (this.date[1].length == 0 && e.which == 8) {
+        this.$refs.mouth.focus();
+        return;
+      }
+    },
   },
 };
 </script>
@@ -184,6 +199,11 @@ form .form-row .bank-account-input input {
   height: 14px;
   padding: unset;
   background-color: unset;
+}
+
+.effective-date-input input:focus,
+.bank-account-input input:focus {
+  outline: none;
 }
 
 form .form-row .effective-date-input {

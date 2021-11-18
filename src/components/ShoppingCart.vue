@@ -75,7 +75,6 @@ export default {
     },
   },
   updated: function () {
-    // console.log(this.totalCostCal);
     this.$emit("total-cost-change", this.totalCostCal);
   },
   created() {

@@ -6,7 +6,7 @@
       <div class="form-row title">
         <label for="">稱謂</label>
         <div class="select-warpper">
-          <select name="" id="" v-model="partOne.salutation">
+          <select name="salutation" id="" v-model="salutation">
             <option value="" disabled selected>先生 / 女士</option>
             <option value="Mr">先生</option>
             <option value="Ms">女士</option>
@@ -17,9 +17,10 @@
         <label for="">姓名</label>
         <br />
         <input
-          v-model="partOne.username"
+          v-model="username"
           type="text"
           id="name"
+          name="name"
           placeholder="請輸入姓名"
           required
         />
@@ -29,8 +30,9 @@
         <br />
         <input
           type="tel"
-          v-model="partOne.phone"
+          v-model="phone"
           id="phone"
+          name="phone"
           placeholder="請輸入行動電話"
           required
         />
@@ -40,8 +42,9 @@
         <br />
         <input
           type="email"
-          v-model="partOne.email"
+          v-model="email"
           id="email"
+          name="email"
           placeholder="請輸入電子郵件"
           required
         />
@@ -50,7 +53,7 @@
         <label for="">縣市</label>
         <br />
         <div class="select-warpper">
-          <select name="" v-model="partOne.city" id="city">
+          <select name="city" v-model="city" id="city">
             <option value="" disabled selected>請選擇縣市</option>
             <option value="new-taipei-city">新北市</option>
             <option value="taipei">台北市</option>
@@ -66,8 +69,9 @@
         <br />
         <input
           type="text"
-          v-model="partOne.addr"
+          v-model="addr"
           id="address"
+          name="addr"
           placeholder="請輸入地址"
           required
         />
@@ -81,18 +85,13 @@ export default {
   name: "form-part-one",
   data() {
     return {
-      partOne: {
-        salutation: "",
-        username: "",
-        phone: "",
-        email: "",
-        city: "",
-        addr: "",
-      },
+      salutation: "",
+      username: "",
+      phone: "",
+      email: "",
+      city: "",
+      addr: "",
     };
-  },
-  updated: function () {
-    this.$emit("part-one-info", this.partOne);
   },
 };
 </script>

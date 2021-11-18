@@ -1,19 +1,13 @@
 <template>
   <div class="form-panel">
-    <form action="" id="shop-form">
+    <form action="" id="shop-form" @submit.stop.prevent="handleSubmit">
       <div class="form-content">
-        <FormPartOne
-          v-show="formPartState == 1"
-          @part-one-info="partOenInfoFetch"
-        />
+        <FormPartOne v-show="formPartState == 1" />
         <FormPartTwo
           v-show="formPartState == 2"
           @part-two-info="partTwoInfoFetch"
         />
-        <FormPartThree
-          v-show="formPartState == 3"
-          @part-three-info="partThreeInfoFetch"
-        />
+        <FormPartThree v-show="formPartState == 3" />
         <!-- button control -->
         <div id="btn-control" class="button-panel">
           <button
@@ -63,44 +57,28 @@ export default {
   },
   data() {
     return {
-      partOneInfo: {
-        salutation: "",
-        username: "",
-        phone: "",
-        email: "",
-        city: "",
-        addr: "",
-      },
       partTwoInfo: {
         deliveryMethodSelect: "standard",
         shippingFee: 0,
       },
-      partThreeInfo: {
-        ccname: "",
-        cardnumber: "",
-        expdate: "",
-        cvv: "",
-      },
     };
   },
   methods: {
+    // 狀態改變傳至Page
     previousStep() {
       this.$emit("after-previous-step");
     },
     nextStep() {
       this.$emit("after-next-step");
     },
-    partOenInfoFetch(info) {
-      console.log("fetch1");
-      this.partOneInfo = info;
-    },
+    // 監控part two之運送方式
     partTwoInfoFetch(info) {
-      console.log("fetch2");
       this.partTwoInfo = info;
     },
-    partThreeInfoFetch(info) {
-      console.log("fetch3");
-      this.partThreeInfo = info;
+    handleSubmit(e) {
+      const form = e.target;
+      const formData = new FormData(form);
+      this.$emit("after-submit", formData);
     },
   },
   watch: {
